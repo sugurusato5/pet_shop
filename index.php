@@ -1,7 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ペットショップ</title>
+</head>
+
+<body>
+    <h2>本日のご紹介ペット！</h2>
+    <form action="index.php" method="get">
+        <div>
+            <label for="keyword">キーワード:</label>
+            <input type="text" name="keyword" placeholder="キーワードの入力">
+            <input type="submit" value="検索">
+        </div><br>
+    </form>
+</body>
+
 <?php
 
 define('DSN', 'mysql:host=db;dbname=pet_shop;charset=utf8;');
-define('USER','staff');
+define('USER', 'staff');
 define('PASSWORD', '9999');
 
 try {
@@ -12,14 +31,24 @@ try {
     exit;
 }
 
-$sql = 'SELECT * FROM animals';
+if ($_GET === '') {
+    $sql ='SELECT * FROM animals';
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
 
-$stmt = $dbh->prepare($sql);
+} else {
+    $keyword = $_GET["keyword"];
+    $keyword = '%' . $keyword . '%';
+    $sql = 'SELECT * FROM animals WHERE description LIKE :keyword';
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+    $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$stmt->execute();
-
-$animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 foreach ($animals as $animal) {
     echo $animal['type'] . 'の' . $animal['classifcation'] . 'ちゃん<br>' . $animal['description'] . '<br>' . $animal['birthday'] . '生まれ<br>' . '出身地' . $animal['birthplace'] . '<hr>';
 }
+?>
+
+</html>
