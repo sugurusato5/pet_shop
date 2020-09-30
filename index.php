@@ -17,6 +17,8 @@
     </form>
 </body>
 
+</html>
+
 <?php
 
 define('DSN', 'mysql:host=db;dbname=pet_shop;charset=utf8;');
@@ -32,23 +34,20 @@ try {
 }
 
 if ($_GET === '') {
-    $sql ='SELECT * FROM animals';
+    $sql = 'SELECT * FROM animals';
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
-
 } else {
     $keyword = $_GET["keyword"];
     $keyword = '%' . $keyword . '%';
     $sql = 'SELECT * FROM animals WHERE description LIKE :keyword';
     $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(':keyword', $keyword, PDO::PARAM_STR);
     $stmt->execute();
     $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 }
 
 foreach ($animals as $animal) {
     echo $animal['type'] . 'の' . $animal['classifcation'] . 'ちゃん<br>' . $animal['description'] . '<br>' . $animal['birthday'] . '生まれ<br>' . '出身地' . $animal['birthplace'] . '<hr>';
 }
 ?>
-
-</html>
