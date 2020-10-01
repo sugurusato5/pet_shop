@@ -15,7 +15,7 @@ try {
 if ($_GET['keyword'] === '') {
     $sql = 'SELECT * FROM animals';
     $stmt = $dbh->prepare($sql);
-    $stmt->execute();
+    $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } else {
     $keyword = '%' . $_GET["keyword"] . '%';
     $sql = 'SELECT * FROM animals WHERE description LIKE :keyword';
@@ -25,9 +25,6 @@ if ($_GET['keyword'] === '') {
     $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-foreach ($animals as $animal) {
-    echo $animal['type'] . 'の' . $animal['classifcation'] . 'ちゃん<br>' . $animal['description'] . '<br>' . $animal['birthday'] . '生まれ<br>' . '出身地' . $animal['birthplace'] . '<hr>';
-}
 ?>
 
 <!DOCTYPE html>
@@ -50,3 +47,10 @@ foreach ($animals as $animal) {
 </body>
 
 </html>
+
+<?php
+foreach ($animals as $animal) {
+echo $animal['type'] . 'の' . $animal['classifcation'] . 'ちゃん<br>' . $animal['description'] . '<br>' . $animal['birthday'] . '生まれ<br>' . '出身地' . $animal['birthplace'] . '
+<hr>';
+}
+?>
