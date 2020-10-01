@@ -12,7 +12,7 @@ try {
     exit;
 }
 
-if ($_GET === '') {
+if ($_GET['keyword'] === '') {
     $sql = 'SELECT * FROM animals';
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
