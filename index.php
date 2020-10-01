@@ -1,24 +1,3 @@
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <title>ペットショップ</title>
-</head>
-
-<body>
-    <h2>本日のご紹介ペット！</h2>
-    <form action="index.php" method="get">
-        <div>
-            <label for="keyword">キーワード:</label>
-            <input type="text" name="keyword" placeholder="キーワードの入力">
-            <input type="submit" value="検索">
-        </div><br>
-    </form>
-</body>
-
-</html>
-
 <?php
 
 define('DSN', 'mysql:host=db;dbname=pet_shop;charset=utf8;');
@@ -50,3 +29,24 @@ foreach ($animals as $animal) {
     echo $animal['type'] . 'の' . $animal['classifcation'] . 'ちゃん<br>' . $animal['description'] . '<br>' . $animal['birthday'] . '生まれ<br>' . '出身地' . $animal['birthplace'] . '<hr>';
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ペットショップ</title>
+</head>
+
+<body>
+    <h2>本日のご紹介ペット！</h2>
+    <form action="index.php" method="get">
+        <div>
+            <label for="keyword">キーワード:</label>
+            <input type="text" name="keyword" placeholder="キーワードの入力">
+            <input type="submit" value="検索">
+        </div><br>
+    </form>
+</body>
+
+</html>
