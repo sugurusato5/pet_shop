@@ -12,10 +12,12 @@ try {
     exit;
 }
 
+
 if ($_GET['keyword'] === '') {
     $sql = 'SELECT * FROM animals';
     $stmt = $dbh->prepare($sql);
     $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt->execute();
 } else {
     $keyword = '%' . $_GET["keyword"] . '%';
     $sql = 'SELECT * FROM animals WHERE description LIKE :keyword';
@@ -43,14 +45,13 @@ if ($_GET['keyword'] === '') {
             <input type="text" name="keyword" placeholder="キーワードの入力">
             <input type="submit" value="検索">
         </div><br>
+        <?php foreach ($animals as $animal) :?>
+            <?= $animal['type'] . 'の' . $animal['classifcation'] . 'ちゃん'?><br>
+            <?= $animal['description'] ?><br>
+            <?= $animal['birthday'] . '生まれ' ?><br>
+            <?= '出身地' . $animal['birthplace'] ?><hr>
+        <?php endforeach; ?>
     </form>
 </body>
 
 </html>
-
-<?php
-foreach ($animals as $animal) {
-echo $animal['type'] . 'の' . $animal['classifcation'] . 'ちゃん<br>' . $animal['description'] . '<br>' . $animal['birthday'] . '生まれ<br>' . '出身地' . $animal['birthplace'] . '
-<hr>';
-}
-?>
