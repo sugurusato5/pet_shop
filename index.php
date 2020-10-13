@@ -16,17 +16,14 @@ try {
 if ($_GET['keyword'] === '') {
     $sql = 'SELECT * FROM animals';
     $stmt = $dbh->prepare($sql);
-    $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $stmt->execute();
 } else {
     $keyword = '%' . $_GET["keyword"] . '%';
     $sql = 'SELECT * FROM animals WHERE description LIKE :keyword';
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam(':keyword', $keyword, PDO::PARAM_STR);
+}
     $stmt->execute();
     $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
 ?>
 
 <!DOCTYPE html>
