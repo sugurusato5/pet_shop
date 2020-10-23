@@ -22,8 +22,8 @@ if ($_GET['keyword'] === '') {
     $stmt = $dbh->prepare($sql);
     $stmt->bindParam(':keyword', $keyword, PDO::PARAM_STR);
 }
-    $stmt->execute();
-    $animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmt->execute();
+$animals = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
